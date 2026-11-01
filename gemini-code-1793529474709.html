@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Prototipo didattico di consulenza giuridica per imprenditori interessati alla costituzione e gestione di una Società di Gestione del Risparmio.">
+<title>Studio SGR | Percorso giuridico-finanziario</title>
+<style>
+:root {
+  --site-primary: #142b43;
+  --site-on-primary: #fbf7ee;
+  --site-secondary: #e9dfcc;
+  --site-on-secondary: #172a3b;
+  --site-background: #f8f5ee;
+  --site-on-background: #202c37;
+  --paper: light-dark(#fffdf8, #1d252d);
+  --paper-soft: light-dark(#f0eadf, #252f39);
+  --ink-muted: light-dark(#5c6872, #c0c8ce);
+  --line: light-dark(#ded7ca, #45515d);
+  --gold: #b79a62;
+  --gold-bright: #f0c57f;
+  --teal: light-dark(#3f7774, #8fc4be);
+  --good-bg: light-dark(#e4eee7, #263b32);
+  --good-ink: light-dark(#285b42, #a8d8bb);
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); line-height: 1.6; }
+button, input { font: inherit; }
+a { color: inherit; }
+.site-root { min-height: 100vh; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; overflow: clip; }
+
+/* Header & Nav */
+header { position: sticky; top: 0; z-index: 20; background: #10263b; border-bottom: 1px solid rgba(231,190,119,.35); backdrop-filter: blur(12px); }
+.nav { max-width: 1500px; min-height: 88px; margin: auto; padding: 13px 4vw; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; min-width: 245px; color: #fff; }
+.brand-mark { width: 52px; height: 52px; border: 2px solid #d9ad68; display: grid; place-items: center; color: #e5bd7c; font-family: var(--site-font-heading); font-size: 1.7rem; }
+.brand strong { display: block; font-family: var(--site-font-heading); font-size: 1.55rem; letter-spacing: .02em; font-weight: 600; color: #fff; }
+.brand small { display: block; font-size: .67rem; letter-spacing: .16em; text-transform: uppercase; color: #e5d5bb; margin-top: 1px; }
+
+.top-search { flex: 1; max-width: 490px; display: flex; align-items: center; background: #fbf7ef; border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,.35); }
+.top-search input { width: 100%; min-width: 0; border: 0; outline: 0; padding: 13px 18px; background: transparent; color: #172a3b; }
+.top-search button { border: 0; background: transparent; color: #172a3b; padding: 8px 18px; font-size: 1.6rem; cursor: pointer; }
+
+/* Menu a Tendina */
+.menu-wrap { position: relative; display: flex; align-items: center; gap: 10px; }
+.menu-toggle { display: block; border: 1px solid rgba(232,189,120,0.4); background: rgba(255,255,255,0.05); color: #e8bd78; font-size: 1.5rem; padding: 6px 12px; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.menu-toggle:hover { background: rgba(232,189,120,0.15); }
+.navlinks { display: none; position: absolute; right: 0; top: calc(100% + 15px); width: min(320px, calc(100vw - 36px)); background: #10263b; border: 1px solid #b99a65; box-shadow: 0 18px 38px rgba(0,0,0,.35); padding: 10px; border-radius: 8px; z-index: 40; flex-direction: column; gap: 4px; }
+.navlinks.open { display: flex; }
+.navlinks a { color: #f8f4eb; padding: 11px 14px; text-decoration: none; border-radius: 4px; font-size: .91rem; transition: background 0.15s, color 0.15s; }
+.navlinks a:hover, .navlinks a:focus-visible { background: rgba(220,176,104,.17); color: #f0c57f; outline: none; }
+
+/* Banner / Hero */
+.hero { 
+  background: var(--site-primary); 
+  color: var(--site-on-primary); 
+  position: relative; 
+  padding: 60px 0 50px; 
+  background-image: linear-gradient(to right, rgba(10, 25, 42, 0.82) 0%, rgba(16, 38, 59, 0.70) 50%, rgba(10, 25, 42, 0.85) 100%), 
+                    url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=1920&q=85');
+  background-size: cover;
+  background-position: center center;
+  border-bottom: 1px solid var(--line); 
+}
+.hero-inner { max-width: 1500px; margin: auto; padding: 0 4vw; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr); gap: 40px; align-items: center; }
+.hero-slogan { font-family: var(--site-font-heading); font-style: italic; color: #f0c57f; font-size: 1.2rem; margin-bottom: 14px; display: block; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+h1 { font-family: var(--site-font-heading); font-weight: 500; line-height: 1.13; font-size: clamp(2.3rem, 4vw, 3.8rem); letter-spacing: -.035em; margin: 0 0 24px; color: #ffffff; text-shadow: 0 2px 6px rgba(0,0,0,0.4); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Finestrelle aggiuntive nel Banner con immagini */
+.hero-features { display: flex; flex-direction: column; gap: 12px; justify-content: center; }
+
+.hero-feature-img-card {
+  height: 95px;
+  border-radius: 8px;
+  border: 1px solid rgba(232, 189, 120, 0.4);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.hero-feature-img-card:hover { transform: translateY(-2px); border-color: var(--gold-bright); }
+.hero-feature-img-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-feature-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,24,40,0.92) 0%, rgba(10,24,40,0.4) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 14px;
+}
+.hero-feature-img-overlay h3 { color: #f0c57f; font-size: 0.98rem; margin: 0 0 2px; display: flex; align-items: center; gap: 6px; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+.hero-feature-img-overlay p { color: #e2e8ec; font-size: 0.78rem; margin: 0; line-height: 1.3; text-shadow: 0 1px 3px rgba(0,0,0,0.9); }
+
+/* Buttons */
+.btn { border: 1px solid transparent; border-radius: 4px; padding: 12px 20px; cursor: pointer; font-weight: 650; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: transform .16s ease, background .16s ease; }
+.btn:hover { transform: translateY(-1px); }
+.btn-primary { background: var(--gold); color: #102438; font-weight: 700; }
+.btn-primary:hover { background: #c5a76e; }
+.btn-ghost { border-color: rgba(255,255,255,.5); color: #ffffff; background: rgba(16,38,59,0.4); backdrop-filter: blur(4px); }
+.btn-ghost:hover { background: rgba(255,255,255,0.15); }
+
+/* Trustbar */
+.trustbar { background: var(--site-secondary); color: var(--site-on-secondary); }
+.trustbar-inner { max-width: 1500px; margin: auto; padding: 18px 4vw; display: flex; flex-wrap: wrap; gap: 16px 34px; align-items: center; justify-content: space-around; font-size: .88rem; }
+.trust-item { display: flex; align-items: center; gap: 9px; flex: 1; justify-content: center; border-right: 1px solid #d9c8a9; padding: 4px 12px; }
+.trust-item:last-child { border-right: 0; }
+.trust-item b { font-size: .9rem; color: #10263b; }
+
+/* Main Section Content */
+main { max-width: 1240px; margin: auto; padding: 48px 28px 64px; min-height: 320px; }
+.section { display: none; margin-bottom: 0; }
+.section.active { display: block; animation: sectionIn .22s ease-out; }
+@keyframes sectionIn { from { opacity: .55; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 27px; }
+.section-head .eyebrow { margin-bottom: 10px; }
+h2 { font-size: calc(clamp(2rem, 3.3vw, 3rem) * var(--site-heading-scale)); margin: 0; letter-spacing: -.025em; font-family: var(--site-font-heading); color: var(--site-on-background); }
+.section-intro { color: var(--ink-muted); max-width: 530px; margin: 0; font-size: .96rem; }
+.kicker { color: var(--teal); font-size: .76rem; font-weight: 750; text-transform: uppercase; letter-spacing: .12em; }
+
+/* Griglie e Card */
+.path-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.path-card { background: var(--paper); border: 1px solid var(--line); padding: 25px; text-align: left; width: 100%; cursor: pointer; color: var(--site-on-background); border-radius: calc(6px * var(--site-radius-scale)); min-height: 190px; display: flex; flex-direction: column; align-items: flex-start; transition: border .18s, transform .18s, box-shadow .18s; }
+.path-card:hover, .path-card:focus-visible { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(20,43,67,.08); outline: none; }
+.path-number { font-family: var(--site-font-heading); color: var(--gold); font-size: 1.5rem; margin-bottom: 15px; }
+.path-card h3 { font-size: 1.35rem; margin: 0 0 10px; font-family: var(--site-font-heading); color: var(--site-on-background); }
+.path-card p { color: var(--ink-muted); margin: 0 0 16px; font-size: .91rem; }
+.path-link { margin-top: auto; color: var(--teal); font-weight: 700; font-size: .86rem; }
+
+.content-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 26px; align-items: start; }
+.panel { background: var(--paper); border: 1px solid var(--line); border-radius: calc(6px * var(--site-radius-scale)); padding: 28px; }
+.panel h3 { font-size: 1.55rem; margin: 0 0 14px; font-family: var(--site-font-heading); color: var(--site-on-background); }
+.panel p { margin: 0 0 14px; }
+
+/* Sidebar di destra con contrasti ottimizzati */
+.sidebar-container { display: flex; flex-direction: column; gap: 18px; }
+.sidebar-card { background: var(--site-primary); color: #ffffff; border-radius: calc(6px * var(--site-radius-scale)); padding: 25px; border: 1px solid rgba(183,154,98,.4); }
+.sidebar-card .kicker { color: var(--gold-bright); }
+.sidebar-card h3 { font-size: 1.35rem; margin: 0 0 12px; font-family: var(--site-font-heading); color: #ffffff; }
+.sidebar-card p { color: #e2e8ec; font-size: .91rem; }
+.sidebar-card a { color: var(--gold-bright); font-weight: 600; text-decoration: underline; }
+.sidebar-card a:hover { color: #ffffff; }
+.mini-list { list-style: none; padding: 0; margin: 16px 0 0; }
+.mini-list li { padding: 10px 0; border-top: 1px solid rgba(255,255,255,.16); font-size: .87rem; color: #dce3e8; }
+.mini-list b { color: var(--gold-bright); font-weight: 700; }
+
+.check-list { display: grid; gap: 10px; margin-top: 18px; }
+.check-row { display: flex; gap: 12px; align-items: flex-start; padding: 13px; background: var(--paper-soft); border-radius: 4px; border: 1px solid var(--line); }
+.check-row input { accent-color: var(--teal); margin-top: 5px; width: 17px; height: 17px; flex: 0 0 auto; }
+.check-row span { display: block; }
+.check-row strong { display: block; font-size: .93rem; color: var(--site-on-background); }
+.check-row small { display: block; color: var(--ink-muted); margin-top: 3px; line-height: 1.45; }
+
+/* Elenco puntato semplice per i requisiti */
+.requirements-bullet-list { margin: 16px 0; padding-left: 20px; color: var(--site-on-background); }
+.requirements-bullet-list li { margin-bottom: 12px; font-size: .92rem; line-height: 1.5; }
+.requirements-bullet-list li strong { color: var(--site-on-background); display: inline; }
+.requirements-bullet-list li small { display: block; color: var(--ink-muted); margin-top: 2px; }
+
+.callout { border-left: 4px solid var(--gold); background: var(--paper-soft); color: var(--site-on-background); padding: 16px 18px; margin: 18px 0; font-size: .92rem; border-radius: 0 4px 4px 0; }
+.callout strong { display: block; margin-bottom: 4px; color: var(--site-on-background); }
+
+.info-tag { display: inline-block; font-size: .69rem; font-weight: 750; letter-spacing: .08em; text-transform: uppercase; padding: 4px 8px; border-radius: 3px; margin-bottom: 11px; }
+.tag-law { background: var(--good-bg); color: var(--good-ink); }
+.tag-practice { background: var(--paper-soft); color: var(--teal); border: 1px solid var(--line); }
+
+.steps { counter-reset: step; display: grid; gap: 0; }
+.step { position: relative; display: grid; grid-template-columns: 50px 1fr; gap: 18px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.step:last-child { border-bottom: 0; }
+.step-no { counter-increment: step; width: 42px; height: 42px; border: 1px solid var(--gold); border-radius: 50%; display: grid; place-items: center; color: var(--gold); font-family: var(--site-font-heading); font-size: 1.15rem; font-weight: 700; }
+.step h3 { margin: 0 0 7px; font-size: 1.28rem; font-family: var(--site-font-heading); color: var(--site-on-background); }
+.step p { margin: 0; color: var(--ink-muted); font-size: .92rem; }
+
+.two-col { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.product-card { background: var(--paper); border: 1px solid var(--line); padding: 24px; border-radius: calc(6px * var(--site-radius-scale)); transition: border-color 0.2s, box-shadow 0.2s; }
+.product-card h3 { margin: 0 0 8px; font-size: 1.45rem; font-family: var(--site-font-heading); color: var(--site-on-background); }
+.product-card p { color: var(--ink-muted); margin: 0 0 14px; font-size: .92rem; }
+.product-card ul { padding-left: 19px; margin: 10px 0 0; }
+.product-card li { padding: 4px 0; font-size: .9rem; color: var(--site-on-background); }
+.pill { display: inline-block; background: var(--paper-soft); color: var(--teal); border: 1px solid var(--line); padding: 4px 10px; font-size: .72rem; font-weight: 750; border-radius: 20px; margin-bottom: 12px; }
+
+.matrix-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: calc(6px * var(--site-radius-scale)); background: var(--paper); }
+table { border-collapse: collapse; width: 100%; min-width: 610px; }
+th, td { text-align: left; padding: 15px 17px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--site-on-background); }
+th { background: var(--paper-soft); font-size: .76rem; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+td { font-size: .9rem; }
+tr:last-child td { border-bottom: 0; }
+
+.source-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.source { border: 1px solid var(--line); background: var(--paper); border-radius: calc(5px * var(--site-radius-scale)); padding: 17px; transition: border-color 0.2s; }
+.source a { color: var(--teal); font-weight: 750; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.source p { color: var(--ink-muted); margin: 7px 0 0; font-size: .84rem; }
+
+.faq { border-top: 1px solid var(--line); }
+details { border-bottom: 1px solid var(--line); padding: 17px 0; }
+summary { cursor: pointer; font-family: var(--site-font-heading); font-size: 1.18rem; color: var(--site-on-background); font-weight: 600; }
+details p { color: var(--ink-muted); margin: 12px 0 0; max-width: 850px; }
+
+footer { background: var(--site-primary); color: #ffffff; border-top: 1px solid rgba(231,190,119,.3); }
+.footer-inner { max-width: 1240px; margin: auto; padding: 40px 28px; display: grid; grid-template-columns: 1.2fr .8fr; gap: 40px; }
+.footer-inner h2 { font-size: 1.7rem; margin: 0 0 12px; font-family: var(--site-font-heading); color: #ffffff; }
+.footer-inner p { color: #d4dce1; font-size: .88rem; margin: 0 0 12px; }
+.footer-small { border-top: 1px solid rgba(255,255,255,.16); padding: 14px 28px; text-align: center; font-size: .76rem; color: #c3cdd4; }
+
+.toast { position: fixed; bottom: 20px; right: 20px; z-index: 50; background: var(--site-primary); color: #ffffff; border: 1px solid var(--gold); padding: 13px 17px; border-radius: calc(5px * var(--site-radius-scale)); box-shadow: 0 10px 35px rgba(0,0,0,.3); display: none; max-width: 340px; font-size: 0.9rem; }
+.toast.show { display: block; }
+
+/* Box Informativo Tutela del Consumatore senza pulsanti/immagini */
+.consumer-protection-box {
+  margin-top: 30px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  padding: 20px;
+  border-radius: calc(6px * var(--site-radius-scale));
+}
+.consumer-protection-box h3 {
+  margin-top: 0;
+  font-family: var(--site-font-heading);
+  color: var(--site-on-background);
+  font-size: 1.35rem;
+}
+.consumer-protection-box p {
+  color: var(--site-on-background);
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+.consumer-protection-box ul {
+  padding-left: 20px;
+  margin: 10px 0 0;
+}
+.consumer-protection-box li {
+  font-size: 0.9rem;
+  color: var(--site-on-background);
+  margin-bottom: 6px;
+}
+
+/* Animazione Evidenziazione Elemento Cliccato */
+.highlight-target {
+  animation: highlightPulse 2s ease-out forwards;
+}
+@keyframes highlightPulse {
+  0% {
+    outline: 3px solid #f0c57f;
+    box-shadow: 0 0 25px rgba(240, 197, 127, 0.7);
+    transform: scale(1.01);
+  }
+  70% {
+    outline: 3px solid #f0c57f;
+    box-shadow: 0 0 15px rgba(240, 197, 127, 0.4);
+  }
+  100% {
+    outline: 1px solid var(--line);
+    box-shadow: none;
+    transform: scale(1);
+  }
+}
+
+/* Responsive adjustments */
+@media(max-width:900px) {
+  .nav { flex-wrap: wrap; gap: 10px 16px; }
+  .brand { min-width: 0; flex: 1; }
+  .top-search { order: 3; flex-basis: 100%; max-width: none; }
+  .hero-inner { grid-template-columns: 1fr; gap: 30px; }
+  .content-grid { grid-template-columns: 1fr; }
+  .path-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .trustbar-inner { gap: 10px; }
+  .trust-item { justify-content: flex-start; border-right: 0; }
+}
+@media(max-width:600px) {
+  .nav { padding: 12px 18px; }
+  .brand strong { font-size: 1.2rem; }
+  .brand small { font-size: .55rem; }
+  .brand-mark { width: 44px; height: 44px; }
+  .menu-toggle { font-size: 1.3rem; }
+  .path-grid, .two-col, .source-list { grid-template-columns: 1fr; }
+  .trustbar-inner { display: grid; grid-template-columns: 1fr; padding: 18px 20px; }
+  main { padding: 38px 20px 50px; }
+  .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+}
+</style>
+</head>
+<body>
+<div class="site-root" id="top">
+  <header>
+    <nav class="nav" aria-label="Navigazione principale">
+      <a class="brand" href="#top" aria-label="Studio SGR, pagina iniziale"><span class="brand-mark">S</span><span><strong>Studio SGR</strong><small>Percorso giuridico-finanziario</small></span></a>
+      <form class="top-search" id="globalSearch" role="search">
+        <input type="search" id="siteSearch" placeholder="Cerca nel sito…" aria-label="Cerca nel sito">
+        <button type="submit" aria-label="Avvia la ricerca">⌕</button>
+      </form>
+      <div class="menu-wrap">
+        <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Apri il menu">☰ Menu</button>
+        <div class="navlinks" id="navLinks">
+          <a href="#percorso" data-section="percorso">⌂ &nbsp; Home</a>
+          <a href="#requisiti" data-section="requisiti">01 &nbsp; Requisiti</a>
+          <a href="#struttura" data-section="struttura">02 &nbsp; Struttura societaria e veicoli</a>
+          <a href="#autorizzazione" data-section="autorizzazione">03 &nbsp; Autorizzazione</a>
+          <a href="#commercializzazione" data-section="commercializzazione">04 &nbsp; Commercializzazione</a>
+          <a href="#espansione" data-section="espansione">05 &nbsp; Espansione</a>
+          <a href="#vigilanza" data-section="vigilanza">06 &nbsp; Vigilanza</a>
+          <a href="#checklist" data-section="checklist">Checklist operativa</a>
+          <a href="#fonti" data-section="fonti">Fonti e approfondimenti</a>
+          <a href="#faq" data-section="faq">Domande frequenti</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Banner (Hero) -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <span class="hero-slogan">"Guida il capitale verso il domani: la tua visione finanziaria strutturata in una SGR solida e conforme."</span>
+        <h1>Il tuo partner per investire con sicurezza.</h1>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#percorso" data-section="percorso">Scopri il percorso <span aria-hidden="true">↓</span></a>
+          <a class="btn btn-ghost" href="#fonti" data-section="fonti">Consulta le fonti ufficiali</a>
+        </div>
+      </div>
+      
+      <div class="hero-features">
+        <!-- 1. Finestrella Analisi dei Mercati -->
+        <div class="hero-feature-img-card" data-jump="struttura" data-target-element="#veicoliSection" title="Vai all'analisi di prodotti e mercati">
+          <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=600&q=80" alt="Grafici di borsa e analisi finanziaria dei mercati">
+          <div class="hero-feature-img-overlay">
+            <h3>📈 Analisi dei mercati & Gestione Fondi →</h3>
+            <p>Strategie di investimento e strutturazione degli OICR.</p>
+          </div>
+        </div>
+
+        <!-- 2. Finestrella Consulenza Strategica -->
+        <div class="hero-feature-img-card" data-jump="struttura" data-target-element="#strutturaCard" title="Vai alla consulenza sulla struttura societaria">
+          <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80" alt="Pianificazione strategica e consulenza finanziaria">
+          <div class="hero-feature-img-overlay">
+            <h3>🛡️ Consulenza Strategica →</h3>
+            <p>Orientamento su misura per la struttura societaria e la governance.</p>
+          </div>
+        </div>
+        
+        <!-- 3. Finestrella Supporto Regolamentare -->
+        <div class="hero-feature-img-card" data-jump="vigilanza" data-target-element="#vigilanzaTable" title="Vai al supporto regolamentare e vigilanza">
+          <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80" alt="Bilancia della giustizia e della giurisprudenza">
+          <div class="hero-feature-img-overlay">
+            <h3>⚖️ Supporto Regolamentare →</h3>
+            <p>Presidio dei requisiti di vigilanza e adeguamento normativo UE.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trustbar">
+    <div class="trustbar-inner">
+      <div class="trust-item"><span>§</span><b>Quadro normativo</b><span>TUF e fonti UE</span></div>
+      <div class="trust-item"><span>◇</span><b>Approccio operativo</b><span>Checklist e passaggi</span></div>
+      <div class="trust-item"><span>↗</span><b>Fonti istituzionali</b><span>Banca d'Italia · Consob</span></div>
+    </div>
+  </div>
+
+  <main>
+    <section class="section active" id="percorso">
+      <div class="section-head">
+        <div><p class="eyebrow">Il percorso dell'imprenditore</p><h2>Da dove si comincia?</h2></div>
+        <p class="section-intro">Seleziona la fase che ti interessa. Ogni area combina riferimenti normativi, spiegazioni in linguaggio accessibile e indicazioni operative da approfondire.</p>
+      </div>
+      <div class="path-grid">
+        <button class="path-card" data-jump="requisiti"><span class="path-number">01</span><h3>Verificare i requisiti</h3><p>Forma, sede, capitale, esponenti, assetto organizzativo e programma di attività.</p><span class="path-link">Requisiti di accesso →</span></button>
+        <button class="path-card" data-jump="struttura"><span class="path-number">02</span><h3>Disegnare la struttura societaria</h3><p>Società per azioni, statuto, governance, partecipazioni e strumenti di investimento.</p><span class="path-link">Assetto societario →</span></button>
+        <button class="path-card" data-jump="autorizzazione"><span class="path-number">03</span><h3>Ottenere l'autorizzazione</h3><p>Domanda, istruttoria, interlocuzione con le autorità e iscrizione all'Albo.</p><span class="path-link">Avvio dell'attività →</span></button>
+        <button class="path-card" data-jump="commercializzazione"><span class="path-number">04</span><h3>Commercializzare</h3><p>Clientela, informativa, target market, conflitti d'interesse e canali distributivi.</p><span class="path-link">Regole di condotta →</span></button>
+        <button class="path-card" data-jump="espansione"><span class="path-number">05</span><h3>Espandere l'attività</h3><p>Nuovi servizi, prodotti, investitori, mercati e operatività transfrontaliera.</p><span class="path-link">Sviluppo dell'attività →</span></button>
+        <button class="path-card" data-jump="vigilanza"><span class="path-number">06</span><h3>Assicurare la vigilanza continuativa</h3><p>Governance, controlli interni, gestione dei rischi e rapporti con le autorità.</p><span class="path-link">Presidi nel tempo →</span></button>
+      </div>
+    </section>
+
+    <section class="section" id="requisiti">
+      <div class="section-head">
+        <div><p class="eyebrow">01 · Requisiti di accesso al mercato</p><h2>I requisiti per entrare nel mercato</h2></div>
+        <p class="section-intro">La SGR è un intermediario vigilato: non basta costituire una società, occorre ottenere l'autorizzazione prevista dal TUF.</p>
+      </div>
+      <div class="content-grid">
+        <div class="panel">
+          <span class="info-tag tag-law">Quadro normativo · da verificare sul testo vigente</span>
+          <h3>Le condizioni da pianificare</h3>
+          <p>Nel materiale del gruppo, il riferimento centrale è l'art. 34 TUF, insieme alle disposizioni attuative della Banca d'Italia. Tra gli elementi da predisporre figurano:</p>
+          
+          <!-- Elenco puntato semplice per i requisiti -->
+          <ul class="requirements-bullet-list">
+            <li><strong>Forma societaria e sede:</strong> <small>Società per azioni, con sede legale e direzione generale in Italia, secondo i requisiti normativi applicabili.</small></li>
+            <li><strong>Esponenti aziendali e partecipanti qualificati:</strong> <small>Verificare requisiti di idoneità, onorabilità, professionalità, indipendenza e trasparenza previsti dalla disciplina.</small></li>
+            <li><strong>Capitale iniziale e fondi propri:</strong> <small>Determinare l'importo richiesto in funzione della categoria di gestore e delle attività previste; pianificare anche i requisiti patrimoniali nel tempo.</small></li>
+            <li><strong>Programma di attività:</strong> <small>Descrivere servizi, fondi previsti, clientela, strategia, canali distributivi, proiezioni economico-finanziarie e risorse.</small></li>
+            <li><strong>Struttura organizzativa e controlli:</strong> <small>Definire governance, gestione dei rischi, controlli interni, sistemi informativi, deleghe e presidi sui conflitti.</small></li>
+          </ul>
+        </div>
+
+        <aside class="sidebar-container">
+          <div class="sidebar-card">
+            <p class="kicker">Indicazione operativa</p>
+            <h3>Progetta prima l'attività, poi la struttura.</h3>
+            <p>Il programma non dovrebbe essere un documento generico: deve essere coerente con i prodotti, la clientela, i costi, le competenze interne e i rischi effettivamente previsti.</p>
+            <ul class="mini-list">
+              <li><b>Fonte chiave:</b> Art. 34 TUF</li>
+              <li><b>Fonte attuativa:</b> Regolamento Banca d'Italia sulla gestione collettiva del risparmio</li>
+              <li><b>Da preparare:</b> Atto costitutivo, statuto, programma e relazione organizzativa</li>
+            </ul>
+          </div>
+          <div class="sidebar-card" style="background: var(--paper-soft); color: var(--site-on-background); border-color: var(--line);">
+            <p class="kicker" style="color: var(--teal);">Insight Regolamentare</p>
+            <h3 style="color: var(--site-on-background);">Punti Chiave</h3>
+            <p style="color: var(--ink-muted);">Verifica sempre l'aggiornamento dei requisiti sul portale della Banca d'Italia prima di presentare la domanda formale.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="struttura">
+      <div class="section-head">
+        <div><p class="eyebrow">02 · Struttura societaria e architettura dei prodotti</p><h2>La forma societaria e i veicoli di investimento</h2></div>
+        <p class="section-intro">La SGR opera in forma di società per azioni. Statuto, organi, partecipazioni e veicoli gestiti devono essere progettati in modo coerente con il perimetro autorizzativo e con la strategia di investimento.</p>
+      </div>
+      <div class="two-col" style="margin-bottom:18px">
+        <article class="product-card" id="strutturaCard"><span class="pill">Forma giuridica</span><h3>Società per azioni</h3><p>La SGR è costituita come S.p.A., con sede legale e direzione generale in Italia. L'oggetto sociale deve essere coerente con le attività riservate e con quelle connesse o strumentali ammesse.</p><ul><li>Atto costitutivo e statuto definiscono identità, oggetto e regole di funzionamento.</li><li>Le modifiche statutarie seguono le regole societarie e, quando previsto, gli obblighi verso le autorità di vigilanza.</li></ul></article>
+        <article class="product-card"><span class="pill">Governance</span><h3>Organi e funzioni aziendali</h3><p>La struttura deve assicurare una gestione sana e prudente, una chiara ripartizione delle responsabilità e un sistema di controlli proporzionato all'attività.</p><ul><li>Organo amministrativo, organo di controllo e funzioni aziendali di controllo.</li><li>Presidi di gestione dei rischi, compliance e revisione interna secondo la disciplina applicabile.</li></ul></article>
+        <article class="product-card"><span class="pill">Assetto proprietario</span><h3>Partecipazioni e requisiti</h3><p>La compagine sociale e gli eventuali titolari di partecipazioni qualificate devono rispettare i requisiti e gli obblighi di comunicazione previsti dal TUF.</p><ul><li>Valutazione di onorabilità e correttezza dei partecipanti rilevanti.</li><li>Trasparenza della catena partecipativa e verifica delle influenze sulla gestione.</li></ul></article>
+        <article class="product-card"><span class="pill">Perimetro operativo</span><h3>Oggetto sociale e attività riservate</h3><p>L'oggetto sociale delimita l'attività della società, ma non sostituisce l'autorizzazione amministrativa richiesta per esercitare i servizi riservati.</p><ul><li>Coerenza tra statuto, programma di attività e autorizzazione.</li><li>Distinzione tra attività principale, attività connesse e attività strumentali.</li></ul></article>
+      </div>
+      <div class="section-head" id="veicoliSection" style="margin-top:36px">
+        <div><p class="eyebrow">Veicoli e prodotti</p><h2>Quali organismi gestire?</h2></div>
+        <p class="section-intro">La forma del veicolo incide sui diritti dell'investitore, sulla liquidità e sulle regole applicabili.</p>
+      </div>
+      <div class="two-col">
+        <article class="product-card"><span class="pill">Struttura contrattuale</span><h3>Fondo comune d'investimento</h3><p>Il patrimonio del fondo è distinto da quello della SGR. L'investitore detiene quote del fondo, non azioni della società di gestione.</p><ul><li>Gestione affidata alla SGR secondo il regolamento del fondo.</li><li>Separazione patrimoniale: non equivale a garanzia di rendimento o restituzione del capitale.</li><li>La disciplina del rimborso dipende dalla natura aperta o chiusa e dai documenti del fondo.</li></ul></article>
+        <article class="product-card"><span class="pill">Struttura societaria</span><h3>SICAV e SICAF</h3><p>Sono OICR costituiti in forma societaria: SICAV a capitale variabile, SICAF a capitale fisso.</p><ul><li>L'investitore acquista azioni e assume la posizione giuridica di azionista.</li><li>La gestione può essere interna o, nei casi consentiti, affidata all'esterno.</li><li>Forma e regime devono essere coerenti con strategia, investitori e disciplina applicabile.</li></ul></article>
+        <article class="product-card"><span class="pill">Regime europeo</span><h3>OICVM / UCITS</h3><p>Organismi di investimento collettivo in valori mobiliari disciplinati dalla direttiva 2009/65/CE e successive modifiche.</p><ul><li>Quadro armonizzato per determinati fondi destinati al pubblico.</li><li>Presidi su diversificazione, rischio, informativa e depositario.</li><li>Il passaporto europeo opera secondo le condizioni e procedure previste dalla disciplina.</li></ul></article>
+        <article class="product-card"><span class="pill">Regime alternativo</span><h3>FIA</h3><p>Fondi di investimento alternativi, con tipologie e strategie diverse: ad esempio immobiliari, private equity o venture capital.</p><ul><li>La categoria non significa automaticamente “prodotto per tutti”.</li><li>Destinatari, liquidità e limiti dipendono dalla struttura e dalle regole applicabili.</li><li>La disciplina AIFMD e le sue modifiche vanno lette nel testo europeo e nazionale vigente.</li></ul></article>
+      </div>
+      <div class="callout"><strong>Diversificazione e rischio</strong>La diversificazione può contribuire a contenere il rischio, ma non lo elimina. I limiti di concentrazione — inclusa la regola UCITS spesso sintetizzata come 5/10/40 — vanno applicati tenendo conto di ambito, calcolo, deroghe ed eccezioni previste dalla disciplina pertinente.</div>
+    </section>
+
+    <section class="section" id="autorizzazione">
+      <div class="section-head">
+        <div><p class="eyebrow">03 · Procedimento</p><h2>Dalla domanda all'Albo</h2></div>
+        <p class="section-intro">L'autorizzazione è un passaggio preliminare essenziale. L'iter concreto e la documentazione richiesta devono essere verificati nelle guide istituzionali aggiornate.</p>
+      </div>
+      <div class="content-grid">
+        <div class="panel">
+          <div class="steps">
+            <div class="step"><div class="step-no">1</div><div><h3>Definire il perimetro operativo</h3><p>Stabilire quali attività si intendono esercitare, quali OICR gestire e a quali categorie di investitori rivolgersi. Il perimetro incide su requisiti e organizzazione.</p></div></div>
+            <div class="step"><div class="step-no">2</div><div><h3>Predisporre la documentazione</h3><p>Preparare domanda, atto costitutivo, statuto, programma di attività, relazione sulla struttura aziendale e documentazione relativa ai requisiti soggettivi e patrimoniali.</p></div></div>
+            <div class="step"><div class="step-no">3</div><div><h3>Istruttoria e interlocuzione</h3><p>La Banca d'Italia è l'autorità competente al rilascio dell'autorizzazione, sentita la Consob. Le autorità esaminano i profili di rispettiva competenza e possono richiedere chiarimenti o integrazioni.</p></div></div>
+            <div class="step"><div class="step-no">4</div><div><h3>Autorizzazione e iscrizione</h3><p>In caso di esito positivo, segue l'iscrizione nell'Albo previsto dall'art. 35 TUF. L'operatività può iniziare solo nel perimetro consentito e una volta adempiute le condizioni applicabili.</p></div></div>
+          </div>
+          <div class="callout"><strong>Non basarsi su termini generici</strong>Le bozze del gruppo menzionano un termine di 180 giorni / sei mesi: per una domanda reale occorre consultare la disciplina procedimentale vigente, verificare quando la documentazione è completa e considerare eventuali sospensioni.</div>
+        </div>
+        <aside class="sidebar-container">
+          <div class="sidebar-card">
+            <p class="kicker">Consiglio pratico</p>
+            <h3>Verifica l'autorizzazione, non solo il nome.</h3>
+            <p>L'Albo pubblico della Banca d'Italia è un punto di riferimento per controllare lo status dell'intermediario.</p>
+            <ul class="mini-list">
+              <li><a href="https://www.bancaditalia.it/compiti/vigilanza/accesso-mercato/operatori-risparmio-gestito/" target="_blank" rel="noopener">Accesso al mercato · Banca d'Italia ↗</a></li>
+              <li><a href="https://www.normattiva.it/" target="_blank" rel="noopener">Normattiva · testi vigenti ↗</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="commercializzazione">
+      <div class="section-head">
+        <div><p class="eyebrow">04 · Commercializzazione dei prodotti</p><h2>Commercializzare senza perdere di vista l'investitore</h2></div>
+        <p class="section-intro">Il prodotto deve essere progettato e distribuito in modo coerente con i destinatari, i rischi e gli obblighi informativi applicabili.</p>
+      </div>
+      <div class="content-grid">
+        <div class="panel">
+          <span class="info-tag tag-law">Riferimenti del gruppo</span>
+          <h3>Presidi da integrare nel processo</h3>
+          <div class="steps">
+            <div class="step"><div class="step-no">A</div><div><h3>Informazioni chiare e corrette</h3><p>La documentazione deve consentire di comprendere caratteristiche, strategia, costi, rischi e condizioni del prodotto. Il KID è richiesto quando previsto dal regime applicabile, non indistintamente per ogni prodotto.</p></div></div>
+            <div class="step"><div class="step-no">B</div><div><h3>Target market e distribuzione</h3><p>Individuare i destinatari per i quali il prodotto è progettato e valutare la coerenza dei canali distributivi con le caratteristiche del prodotto e del pubblico.</p></div></div>
+            <div class="step"><div class="step-no">C</div><div><h3>Adeguatezza e appropriatezza</h3><p>Non sono sinonimi: l'applicabilità dipende dal servizio prestato, dal tipo di operazione e dal quadro normativo pertinente. Non descriverle come un unico test universale.</p></div></div>
+            <div class="step"><div class="step-no">D</div><div><h3>Conflitti d'interesse</h3><p>Identificare, prevenire o gestire i conflitti con procedure effettive; informare il cliente quando richiesto dalla disciplina applicabile.</p></div></div>
+          </div>
+
+          <!-- Sezione Tutela del Consumatore riassuntiva in testo -->
+          <div class="consumer-protection-box">
+            <h3>Tutela del consumatore e trasparenza dei costi</h3>
+            <p>La trasparenza informativa costituisce il pilastro centrale per la protezione dell'investitore durante la commercializzazione:</p>
+            <ul>
+              <li><strong>Scenari di rischio e performance:</strong> Presentazione chiara dell'indicatore sintetico di rischio (SRI) e degli scenari di rendimento simulati su orizzonti temporali definiti.</li>
+              <li><strong>Trasparenza analitica dei costi:</strong> Dettaglio delle spese una tantum (ingresso/uscita), dei costi correnti annui (gestione e transazione) e delle commissioni di performance legate a benchmark di riferimento.</li>
+              <li><strong>Canali di ricorso e reclami:</strong> Presenza di procedure dedicate per la gestione tempestiva delle contestazioni scritte con possibilità di ricorso all'Arbitro per le Controversie Finanziarie (ACF).</li>
+            </ul>
+          </div>
+
+        </div>
+        <aside class="sidebar-container">
+          <div class="sidebar-card">
+            <p class="kicker">Cosa evitare</p>
+            <h3>Presidi essenziali nella distribuzione</h3>
+            <ul class="mini-list">
+              <li><b>Mai:</b> Presentare il rendimento come garantito se non lo è.</li>
+              <li><b>Mai:</b> Omettere costi, rischi o limiti rilevanti.</li>
+              <li><b>Mai:</b> Confondere un fondo comune con la SGR che lo gestisce.</li>
+              <li><b>Mai:</b> Offrire un prodotto al di fuori del perimetro autorizzato o senza i presidi richiesti.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="espansione">
+      <div class="section-head">
+        <div><p class="eyebrow">05 · Espansione dell'attività</p><h2>Ampliare servizi, clientela e mercati in modo regolato</h2></div>
+        <p class="section-intro">L'espansione può riguardare servizi, prodotti, investitori o mercati geografici. Ogni cambiamento va valutato prima di attuarlo.</p>
+      </div>
+      <div class="two-col">
+        <article class="product-card"><span class="pill">Oggetto sociale e autorizzazione</span><h3>Nuovi servizi e strumenti</h3><p>L'espansione può comportare l'estensione delle attività offerte, ad esempio verso la gestione di portafogli individuali o nuove tipologie di FIA. Occorre verificare la coerenza tra oggetto sociale, autorizzazione e programma di attività.</p><ul><li>Valutare se siano necessarie modifiche statutarie o autorizzazioni/comunicazioni preventive.</li><li>Misurare gli effetti su capitale, organizzazione, personale e sistemi.</li><li>Riesaminare la gestione dei rischi, il RAF e i controlli interni.</li></ul></article>
+        <article class="product-card"><span class="pill">Clientela e tutela</span><h3>Nuovi investitori</h3><p>Il passaggio verso nuove categorie di clientela richiede una classificazione corretta e presidi coerenti con il livello di esperienza e protezione previsto dalla disciplina.</p><ul><li>Distinguere clienti al dettaglio e investitori professionali.</li><li>Gestire le richieste di trattamento opt-up secondo i criteri e le formalità applicabili.</li><li>Definire il mercato di riferimento positivo e negativo per prodotti e servizi.</li></ul></article>
+        <article class="product-card"><span class="pill">Mercati europei</span><h3>Passaporto e operatività cross-border</h3><p>L'espansione geografica può avvenire tramite succursale oppure mediante libera prestazione di servizi, secondo il regime applicabile al gestore e al fondo.</p><ul><li>Verificare le procedure di notifica e il ruolo delle autorità dello Stato d'origine e dello Stato ospitante.</li><li>Distinguere stabilimento fisico e prestazione transfrontaliera senza succursale.</li><li>Considerare le regole di commercializzazione del Paese di destinazione.</li></ul></article>
+        <article class="product-card"><span class="pill">Distribuzione e tecnologia</span><h3>Canali digitali e intelligenza artificiale</h3><p>La distribuzione può avvenire tramite strutture proprie, reti di consulenti e canali digitali. L'uso di strumenti automatizzati deve inserirsi in un sistema di governance e controllo.</p><ul><li>Monitorare i soggetti incaricati dell'offerta fuori sede e la relativa rete distributiva.</li><li>Presidiare identificazione a distanza, antiriciclaggio e protezione dei dati personali.</li><li>Valutare gli obblighi pertinenti in materia di AI, supervisione umana e gestione dei rischi.</li></ul></article>
+      </div>
+      <div class="callout"><strong>Il criterio che collega tutte le forme di espansione</strong>Ogni ampliamento deve essere valutato prima dell'attuazione: perimetro autorizzativo, modifiche societarie, adeguatezza patrimoniale, organizzazione, tutela degli investitori e obblighi di notifica devono rimanere coerenti.</div>
+    </section>
+
+    <section class="section" id="vigilanza">
+      <div class="section-head">
+        <div><p class="eyebrow">06 · Vigilanza continuativa</p><h2>La vigilanza accompagna ogni fase della vita della SGR</h2></div>
+        <p class="section-intro">La SGR deve mantenere nel tempo assetti adeguati e rispettare gli obblighi applicabili alla propria operatività.</p>
+      </div>
+      <div class="matrix-wrap" id="vigilanzaTable">
+        <table>
+          <thead><tr><th>Area</th><th>Ruolo prevalente</th><th>Focus operativo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Banca d'Italia</strong></td><td>Vigilanza prudenziale e stabilità</td><td>Patrimonio, organizzazione, contenimento dei rischi e sana e prudente gestione.</td></tr>
+            <tr><td><strong>Consob</strong></td><td>Trasparenza e correttezza dei comportamenti</td><td>Informativa, condotta verso gli investitori, conflitti d'interesse e regole di distribuzione secondo le competenze attribuite.</td></tr>
+            <tr><td><strong>SGR e organi interni</strong></td><td>Controlli di primo e secondo livello e governance</td><td>Monitoraggio dei rischi, tracciabilità delle decisioni, procedure aggiornate, formazione e gestione delle anomalie.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="two-col" style="margin-top:18px">
+        <article class="product-card"><span class="info-tag tag-law">Cornice normativa</span><h3>Poteri e conseguenze</h3><p>Il TUF e le norme attuative attribuiscono alle autorità poteri di vigilanza e, nei casi previsti, poteri correttivi e sanzionatori. Le conseguenze dipendono dalla violazione, dal soggetto responsabile e dalla disposizione applicabile.</p></article>
+        <article class="product-card"><span class="info-tag tag-practice">Raccomandazione operativa</span><h3>Costruire una cultura della conformità</h3><p>Assegnare responsabilità chiare, documentare controlli e decisioni, gestire tempestivamente gli incidenti e riesaminare le procedure quando cambiano prodotti, clientela o normativa.</p></article>
+      </div>
+    </section>
+
+    <section class="section" id="checklist">
+      <div class="section-head">
+        <div><p class="eyebrow">Strumento pratico</p><h2>Checklist preliminare dell'imprenditore</h2></div>
+        <p class="section-intro">Le caselle sono precompilate a titolo indicativo e non modificabili direttamente.</p>
+      </div>
+      <div class="content-grid">
+        <div class="panel">
+          <h3>Attività completate</h3>
+          <div class="check-list" id="mainChecklist">
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Definire attività e prodotti</strong><small>Gestione collettiva, eventuali servizi d'investimento, tipologie di OICR e clientela.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Verificare i requisiti societari</strong><small>Forma, sede, statuto, partecipanti ed esponenti aziendali.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Calcolare il fabbisogno patrimoniale</strong><small>Capitale iniziale, fondi propri e sostenibilità finanziaria.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Redigere programma e piano economico</strong><small>Attività, mercato, costi, proiezioni, rischi e distribuzione.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Disegnare governance e controlli</strong><small>Ruoli, deleghe, gestione rischi, compliance e sistemi informativi.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Preparare la documentazione autorizzativa</strong><small>Confronto con le guide applicative e i moduli aggiornati dell'autorità.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Verificare il percorso di autorizzazione e iscrizione</strong><small>Non avviare attività riservate prima che ne ricorrano le condizioni.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Predisporre informativa e processi distributivi</strong><small>KID e documenti richiesti, target market, costi, rischi e canali.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Attivare il monitoraggio continuativo</strong><small>Segnalazioni, controlli, aggiornamento procedure e gestione anomalie.</small></span></label>
+            <label class="check-row"><input type="checkbox" class="main-task" checked disabled><span><strong>Valutare preventivamente ogni espansione</strong><small>Autorizzazioni, comunicazioni, notifiche cross-border e nuovi prodotti.</small></span></label>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+            <button class="btn" style="border:1px solid var(--line);background:var(--paper);color:var(--site-on-background)" id="printChecklist" type="button">Stampa / salva PDF</button>
+          </div>
+        </div>
+        <aside class="sidebar-container">
+          <div class="panel">
+            <span class="info-tag tag-practice">Nota di metodo</span>
+            <h3>Tre livelli da distinguere</h3>
+            <p><strong>Norma:</strong> ciò che deriva da una disposizione applicabile.</p>
+            <p><strong>Interpretazione:</strong> la lettura sistematica del quadro normativo e delle competenze.</p>
+            <p><strong>Raccomandazione:</strong> una scelta organizzativa prudenziale, utile ma non necessariamente imposta in quei termini dalla legge.</p>
+            <div class="callout"><strong>Per un caso reale</strong>Verificare il testo vigente del TUF, i regolamenti applicabili, la categoria di gestore e il prodotto specifico prima di prendere decisioni operative.</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" id="fonti">
+      <div class="section-head">
+        <div><p class="eyebrow">Biblioteca essenziale</p><h2>Fonti e approfondimenti</h2></div>
+        <p class="section-intro">I materiali del gruppo richiamano le fonti seguenti. I collegamenti conducono a portali istituzionali o testi normativi; controllare sempre versione, modifiche e ambito di applicazione.</p>
+      </div>
+      <div class="source-list" id="sourceList">
+        <article class="source" data-terms="tuf testo unico finanza normativa nazionale"><a href="https://www.consob.it/web/area-pubblica/tuf" target="_blank" rel="noopener">Testo Unico della Finanza (TUF) ↗</a><p>Riferimento nazionale centrale: artt. 5, 13, 14, 33, 34, 35, 36 e disposizioni pertinenti.</p></article>
+        <article class="source" data-terms="banca italia sgr accesso mercato autorizzazione"><a href="https://www.bancaditalia.it/compiti/vigilanza/accesso-mercato/operatori-risparmio-gestito/" target="_blank" rel="noopener">Banca d'Italia · Operatori del risparmio gestito ↗</a><p>Informazioni istituzionali su accesso al mercato e operatori del risparmio gestito.</p></article>
+        <article class="source" data-terms="regolamento gestione collettiva risparmio rgcr capitale programma attività"><a href="https://www.bancaditalia.it/compiti/vigilanza/normativa/archivio-norme/regolamenti/20150119/index.html" target="_blank" rel="noopener">Regolamento sulla gestione collettiva del risparmio ↗</a><p>Fonte attuativa da consultare per requisiti, organizzazione e procedimento; verificare gli aggiornamenti vigenti.</p></article>
+        <article class="source" data-terms="consob investitori fondi comuni educazione finanziaria"><a href="https://www.consob.it/web/investor-education/fondi-comuni" target="_blank" rel="noopener">Consob · I fondi comuni ↗</a><p>Materiale divulgativo utile per spiegare il funzionamento dei fondi e i concetti essenziali agli investitori.</p></article>
+        <article class="source" data-terms="direttiva ucits oicvm 2009 65 ce eur lex"><a href="https://eur-lex.europa.eu/eli/dir/2009/65/oj?locale=it" target="_blank" rel="noopener">Direttiva 2009/65/CE · UCITS / OICVM ↗</a><p>Quadro europeo degli organismi d'investimento collettivo in valori mobiliari, con successive modifiche.</p></article>
+        <article class="source" data-terms="direttiva aifmd 2011 61 ue fia eur lex"><a href="https://eur-lex.europa.eu/eli/dir/2011/61/oj?locale=it" target="_blank" rel="noopener">Direttiva 2011/61/UE · AIFMD / FIA ↗</a><p>Quadro europeo per i gestori di fondi d'investimento alternativi, da leggere con le modifiche successive.</p></article>
+        <article class="source" data-terms="aifmd ii direttiva 2024 927 ue modifiche"><a href="https://eur-lex.europa.eu/eli/dir/2024/927/oj?locale=it" target="_blank" rel="noopener">Direttiva (UE) 2024/927 ↗</a><p>Modifiche alla disciplina dei gestori di fondi alternativi e degli OICVM; verificare recepimento e applicabilità delle singole disposizioni.</p></article>
+        <article class="source" data-terms="mifid ii 2014 65 ue servizi investimento"><a href="https://eur-lex.europa.eu/eli/dir/2014/65/oj?locale=it" target="_blank" rel="noopener">Direttiva 2014/65/UE · MiFID II ↗</a><p>Rilevante per i servizi d'investimento e i relativi obblighi, nei limiti in cui si applichi all'attività svolta.</p></article>
+        <article class="source" data-terms="priips kid regolamento 1286 2014 ue"><a href="https://eur-lex.europa.eu/eli/reg/2014/1286/oj?locale=it" target="_blank" rel="noopener">Regolamento (UE) n. 1286/2014 · PRIIPs ↗</a><p>Riferimento europeo per il documento contenente le informazioni chiave (KID) nei casi previsti.</p></article>
+        <article class="source" data-terms="costituzione italiana articolo 41 47 iniziativa economica risparmio"><a href="https://www.senato.it/istituzione/la-costituzione" target="_blank" rel="noopener">Costituzione della Repubblica italiana ↗</a><p>Artt. 41 e 47: iniziativa economica privata, utilità sociale e tutela del risparmio.</p></article>
+      </div>
+      <p id="noSources" style="display:none;color:var(--ink-muted);padding:15px 0">Nessuna fonte corrisponde alla ricerca.</p>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="section-head"><div><p class="eyebrow">Domande frequenti</p><h2>Dubbi ricorrenti</h2></div></div>
+      <div class="faq">
+        <details><summary>Una SGR può iniziare a operare appena costituita?</summary><p>No: le attività riservate richiedono il rispetto del regime autorizzativo e degli altri presupposti applicabili. La costituzione civilistica della società non equivale all'autorizzazione all'esercizio dell'attività riservata.</p></details>
+        <details><summary>Fondo comune e SGR sono la stessa cosa?</summary><p>No. Il fondo comune è un patrimonio autonomo destinato all'investimento collettivo; la SGR è il soggetto che lo istituisce e/o gestisce secondo il quadro normativo e il regolamento del fondo.</p></details>
+        <details><summary>La diversificazione elimina il rischio?</summary><p>No. Può contribuire a ridurre alcuni rischi di concentrazione, ma non elimina il rischio di mercato, di liquidità o altri rischi connessi alla strategia e agli attivi detenuti.</p></details>
+        <details><summary>Ogni violazione comporta la stessa sanzione?</summary><p>No. La risposta dipende dalla disposizione violata, dalla gravità e dalle circostanze del caso, dal soggetto responsabile e dai poteri attribuiti all'autorità competente. Per questo è essenziale non formulare automatismi generici.</p></details>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p class="eyebrow" style="color: var(--gold-bright);">Studio SGR · Progetto didattico</p>
+        <h2>La regolazione come strumento per decidere meglio.</h2>
+        <p>Un prototipo di informazione giuridico-finanziaria che accompagna l'imprenditore attraverso requisiti, struttura societaria, autorizzazione, commercializzazione, espansione e vigilanza continuativa.</p>
+      </div>
+      <div>
+        <p><strong style="color: var(--gold-bright);">Contributi del gruppo</strong></p>
+        <p>Anna Gastaldi · Federico Rossi · Gianluca Salvadego · Valentino Ferro · Samuele Marchesani · Niccolò Rossetto</p>
+        <p>Le sezioni integrano i temi di requisiti tecnico-giuridici, autorizzazione, commercializzazione, vigilanza continuativa ed espansione dell'attività.</p>
+      </div>
+    </div>
+    <div class="footer-small">Prototipo universitario a fini didattici · Non costituisce consulenza legale o finanziaria · Riferimenti normativi da verificare sul testo vigente</div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+(function(){
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const sections = Array.from(document.querySelectorAll('main > .section'));
+
+  function showSection(id, scroll = false, targetSelector = null){
+    const target = sections.find(section => section.id === id) || document.getElementById('percorso');
+    sections.forEach(section => section.classList.toggle('active', section === target));
+    navLinks.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded','false');
+    
+    history.replaceState(null, '', '#' + target.id);
+
+    if (scroll) {
+      setTimeout(() => {
+        let elementToScroll = target;
+        if (targetSelector) {
+          const specificElement = target.querySelector(targetSelector);
+          if (specificElement) elementToScroll = specificElement;
+        }
+
+        elementToScroll.scrollIntoView({
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+          block: 'center'
+        });
+
+        if (elementToScroll !== target) {
+          elementToScroll.classList.remove('highlight-target');
+          void elementToScroll.offsetWidth; 
+          elementToScroll.classList.add('highlight-target');
+          setTimeout(() => elementToScroll.classList.remove('highlight-target'), 2200);
+        }
+      }, 50);
+    }
+  }
+
+  menuToggle.addEventListener('click', () => {
+    const open = navLinks.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  navLinks.querySelectorAll('a[data-section]').forEach(a => a.addEventListener('click', e => {
+    e.preventDefault();
+    showSection(a.dataset.section, true);
+  }));
+
+  document.querySelectorAll('[data-section]').forEach(a => {
+    if(!a.closest('#navLinks')) a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(a.dataset.section, true);
+    });
+  });
+
+  document.querySelectorAll('[data-jump]').forEach(btn => btn.addEventListener('click', () => {
+    const sectionId = btn.dataset.jump;
+    const targetSelector = btn.dataset.targetElement || null;
+    showSection(sectionId, true, targetSelector);
+  }));
+
+  const toast = document.getElementById('toast');
+  let toastTimer;
+  function showToast(message){
+    toast.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
+  }
+
+  const quickChecks = document.querySelectorAll('.task-check');
+  quickChecks.forEach(input => input.addEventListener('change', () => showToast(input.checked ? 'Voce contrassegnata come verificata.' : 'Voce rimossa dalla selezione.')));
+
+  document.getElementById('printChecklist')?.addEventListener('click', () => window.print());
+
+  const searchForm = document.getElementById('globalSearch'),
+        searchInput = document.getElementById('siteSearch');
+  searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const q = searchInput.value.trim().toLocaleLowerCase('it');
+    if(!q){ showSection('percorso', true); return; }
+    const matches = sections.map(section => ({
+      section,
+      score: (section.textContent.toLocaleLowerCase('it').match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length
+    })).filter(x => x.score > 0).sort((a, b) => b.score - a.score);
+
+    if(matches.length){
+      showSection(matches[0].section.id, true);
+      showToast('Risultato trovato in: ' + (matches[0].section.querySelector('h2')?.textContent || matches[0].section.id));
+    } else {
+      showToast('Nessun risultato trovato. Prova con un altro termine.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
